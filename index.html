@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Official Headquarters of Absolutely Nothing Important</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Boogaloo&family=Fredoka+One&family=Pacifico&family=Comic+Neue:wght@700&display=swap');
+
+    :root {
+      --hot-pink: #ff007f;
+      --electric-lime: #b0ff00;
+      --nuclear-orange: #ff6600;
+      --screaming-cyan: #00ffff;
+      --blinding-yellow: #ffff00;
+      --deep-purple: #6600cc;
+      --toxic-green: #39ff14;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: repeating-linear-gradient(
+        45deg,
+        #ff007f 0px, #ff007f 20px,
+        #ff6600 20px, #ff6600 40px,
+        #ffff00 40px, #ffff00 60px,
+        #00ffff 60px, #00ffff 80px,
+        #6600cc 80px, #6600cc 100px
+      );
+      background-size: 141px 141px;
+      animation: bgSlide 3s linear infinite;
+      font-family: 'Comic Neue', 'Comic Sans MS', cursive;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    @keyframes bgSlide {
+      0% { background-position: 0 0; }
+      100% { background-position: 141px 141px; }
+    }
+
+    /* ---- HEADER ---- */
+    header {
+      background: rgba(0,0,0,0.85);
+      text-align: center;
+      padding: 20px 10px;
+      position: relative;
+      border-bottom: 8px solid var(--blinding-yellow);
+    }
+
+    header h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(1.8rem, 5vw, 4rem);
+      color: var(--blinding-yellow);
+      text-shadow:
+        4px 4px 0 var(--hot-pink),
+        8px 8px 0 var(--electric-lime),
+        -2px -2px 12px var(--screaming-cyan);
+      animation: wobble 1.5s ease-in-out infinite alternate;
+      letter-spacing: 2px;
+      line-height: 1.2;
+    }
+
+    @keyframes wobble {
+      0%   { transform: rotate(-2deg) scale(1.0); }
+      100% { transform: rotate(2deg) scale(1.05); }
+    }
+
+    .subtitle {
+      font-family: 'Boogaloo', cursive;
+      font-size: clamp(1rem, 3vw, 1.8rem);
+      color: var(--screaming-cyan);
+      margin-top: 10px;
+      animation: colorCycle 2s linear infinite;
+    }
+
+    @keyframes colorCycle {
+      0%   { color: var(--screaming-cyan); }
+      25%  { color: var(--electric-lime); }
+      50%  { color: var(--hot-pink); }
+      75%  { color: var(--nuclear-orange); }
+      100% { color: var(--screaming-cyan); }
+    }
+
+    .star-badge {
+      display: inline-block;
+      background: var(--hot-pink);
+      color: white;
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.9rem;
+      padding: 4px 14px;
+      border-radius: 999px;
+      border: 3px solid var(--blinding-yellow);
+      margin-top: 8px;
+      transform: rotate(-3deg);
+      animation: pulse 0.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse {
+      0%   { transform: rotate(-3deg) scale(1); }
+      100% { transform: rotate(3deg) scale(1.1); }
+    }
+
+    /* ---- TICKER ---- */
+    .ticker-wrap {
+      background: black;
+      color: var(--electric-lime);
+      font-family: 'Boogaloo', cursive;
+      font-size: 1.3rem;
+      overflow: hidden;
+      white-space: nowrap;
+      border-top: 4px solid var(--hot-pink);
+      border-bottom: 4px solid var(--hot-pink);
+      padding: 6px 0;
+    }
+
+    .ticker-content {
+      display: inline-block;
+      animation: ticker 22s linear infinite;
+    }
+
+    @keyframes ticker {
+      0%   { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* ---- MAIN GRID ---- */
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 24px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: rgba(0,0,0,0.88);
+      border-radius: 20px;
+      padding: 24px;
+      border: 4px solid;
+      box-shadow: 0 0 30px rgba(255,255,255,0.15);
+      position: relative;
+    }
+
+    .card-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.6rem;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .card-pink  { border-color: var(--hot-pink);      color: var(--hot-pink); }
+    .card-green { border-color: var(--electric-lime); color: var(--electric-lime); }
+    .card-cyan  { border-color: var(--screaming-cyan);color: var(--screaming-cyan); }
+    .card-orange{ border-color: var(--nuclear-orange);color: var(--nuclear-orange); }
+    .card-purple{ border-color: var(--deep-purple);   color: #cc88ff; }
+    .card-yellow{ border-color: var(--blinding-yellow);color: var(--blinding-yellow); }
+
+    .card p { color: #eee; line-height: 1.6; margin-bottom: 10px; font-size: 1rem; }
+
+    /* ---- BUTTONS ---- */
+    .silly-btn {
+      display: block;
+      width: 100%;
+      margin: 8px 0;
+      padding: 12px 20px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .silly-btn:hover  { transform: scale(1.07) rotate(-1deg); }
+    .silly-btn:active { transform: scale(0.95); }
+
+    .btn-pink   { background: var(--hot-pink); color: white; box-shadow: 0 4px 0 #aa005a; }
+    .btn-green  { background: var(--electric-lime); color: black; box-shadow: 0 4px 0 #6b9900; }
+    .btn-orange { background: var(--nuclear-orange); color: white; box-shadow: 0 4px 0 #aa4400; }
+    .btn-purple { background: var(--deep-purple); color: white; box-shadow: 0 4px 0 #330066; }
+    .btn-cyan   { background: var(--screaming-cyan); color: black; box-shadow: 0 4px 0 #009999; }
+    .btn-yellow { background: var(--blinding-yellow); color: black; box-shadow: 0 4px 0 #999900; }
+
+    /* ---- COUNTDOWN ---- */
+    #countdown-display {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 14px 0;
+    }
+
+    .cd-unit {
+      background: var(--hot-pink);
+      color: white;
+      border-radius: 12px;
+      padding: 10px 14px;
+      text-align: center;
+      min-width: 64px;
+      border: 3px solid var(--blinding-yellow);
+    }
+
+    .cd-num {
+      font-family: 'Pacifico', cursive;
+      font-size: 2rem;
+      line-height: 1;
+      display: block;
+    }
+
+    .cd-label {
+      font-size: 0.7rem;
+      color: #ffff99;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ---- MEMBERS ONLY ---- */
+    #members-area {
+      display: none;
+    }
+
+    .padlock {
+      font-size: 4rem;
+      text-align: center;
+      animation: shake 0.5s ease-in-out infinite;
+    }
+
+    @keyframes shake {
+      0%,100% { transform: rotate(0deg); }
+      25%  { transform: rotate(-5deg); }
+      75%  { transform: rotate(5deg); }
+    }
+
+    #login-form input {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border-radius: 8px;
+      border: 3px solid var(--hot-pink);
+      background: #111;
+      color: white;
+      font-family: 'Comic Neue', cursive;
+      font-size: 1rem;
+    }
+
+    #login-form input::placeholder { color: #888; }
+
+    /* ---- PROGRESS BARS ---- */
+    .prog-wrap { margin: 8px 0; }
+    .prog-label { color: #ccc; font-size: 0.9rem; margin-bottom: 3px; }
+    .prog-bar {
+      height: 22px;
+      border-radius: 11px;
+      background: #222;
+      border: 2px solid #555;
+      overflow: hidden;
+    }
+    .prog-fill {
+      height: 100%;
+      border-radius: 11px;
+      position: relative;
+      animation: progGlow 1.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes progGlow {
+      0%   { filter: brightness(1); }
+      100% { filter: brightness(1.4) saturate(1.5); }
+    }
+
+    /* ---- VISITOR COUNTER ---- */
+    #visitor-num {
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      color: var(--electric-lime);
+      text-align: center;
+      text-shadow: 0 0 20px var(--electric-lime);
+      animation: flicker 3s step-end infinite;
+    }
+
+    @keyframes flicker {
+      0%,95%,100% { opacity: 1; }
+      96%          { opacity: 0.4; }
+      97%          { opacity: 1; }
+      98%          { opacity: 0.2; }
+    }
+
+    /* ---- FLOATING EMOJIS ---- */
+    .floater {
+      position: fixed;
+      font-size: 2.5rem;
+      pointer-events: none;
+      animation: float linear forwards;
+      z-index: 9999;
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-90vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* ---- MARQUEE STRIP ---- */
+    .rainbow-strip {
+      padding: 10px;
+      text-align: center;
+      font-family: 'Pacifico', cursive;
+      font-size: 1.1rem;
+      background: linear-gradient(90deg,
+        red, orange, yellow, green, blue, violet, red);
+      background-size: 200% auto;
+      animation: rainbow 2s linear infinite;
+      color: white;
+      text-shadow: 1px 1px 3px black;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @keyframes rainbow {
+      0%   { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* ---- MODAL ---- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-box {
+      background: #111;
+      border: 6px solid var(--hot-pink);
+      border-radius: 24px;
+      padding: 32px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      0%   { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    .modal-box h2 {
+      font-family: 'Pacifico', cursive;
+      color: var(--blinding-yellow);
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+
+    .modal-box p { color: #eee; margin-bottom: 16px; line-height: 1.5; }
+
+    .modal-close {
+      position: absolute;
+      top: 10px; right: 16px;
+      background: none;
+      border: none;
+      color: var(--hot-pink);
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    /* ---- FACTS SECTION ---- */
+    #fact-box {
+      background: #1a1a1a;
+      border: 3px dashed var(--electric-lime);
+      border-radius: 12px;
+      padding: 16px;
+      color: var(--electric-lime);
+      font-size: 1.1rem;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      background: black;
+      color: #555;
+      text-align: center;
+      padding: 20px;
+      border-top: 6px double var(--hot-pink);
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+
+    footer span { color: var(--hot-pink); }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 480px) {
+      main { padding: 12px; gap: 14px; }
+      .card { padding: 16px; }
+    }
+
+    /* ---- SPIN TEXT ---- */
+    .spin { display: inline-block; animation: spin 2s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ---- CERTIFICATE ---- */
+    .cert {
+      border: 6px double gold;
+      padding: 16px;
+      margin: 10px 0;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #1a0a00, #0a0a1a);
+      text-align: center;
+      color: gold;
+    }
+
+    .cert h3 { font-family: 'Pacifico', cursive; font-size: 1.3rem; margin-bottom: 6px; }
+    .cert p  { font-size: 0.85rem; color: #daa520; }
+
+    /* ---- POLL ---- */
+    .poll-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 6px 0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 2px solid #444;
+      cursor: pointer;
+      color: #eee;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .poll-option:hover { background: #222; border-color: var(--screaming-cyan); }
+
+    .poll-option input { accent-color: var(--screaming-cyan); width: 18px; height: 18px; }
+
+    #poll-result { display: none; color: var(--electric-lime); font-size: 1rem; margin-top: 10px; text-align: center; }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <h1>The Official Headquarters of<br>Absolutely Nothing Important</h1>
+  <div class="subtitle">Est. Last Tuesday &bull; Population: You (unfortunately)</div>
+  <div class="star-badge">&#9733; INTERNATIONALLY UNRECOGNISED SINCE 2003 &#9733;</div>
+</header>
+
+<!-- ===== BREAKING NEWS TICKER ===== -->
+<div class="ticker-wrap">
+  <span class="ticker-content">
+    &nbsp;&nbsp;&nbsp; BREAKING: Local man convinced his cat is judging him &bull;&bull; ALERT: Scientists confirm there are exactly too many stairs in every building &bull;&bull; URGENT: Nobody has checked if pigeons have been paying their taxes &bull;&bull; EXCLUSIVE: The moon is still there, experts say &bull;&bull; DEVELOPING: Man cannot remember why he walked into kitchen for the 47th time today &bull;&bull; FLASH: Scientists baffled by socks that enter the washing machine but never come out &bull;&bull; JUST IN: Tuesday declared "the most mid day of the week" by unanimous global consensus &bull;&bull;
+  </span>
+</div>
+
+<!-- ===== MAIN GRID ===== -->
+<main>
+
+  <!-- FAKE BUTTONS CARD -->
+  <div class="card card-pink">
+    <div class="card-title">Important Control Panel</div>
+    <p>These buttons do critical things. Please press them all.</p>
+    <button class="silly-btn btn-pink"    onclick="sillBtn(this,'Reversing the polarity of the internet... done! Nothing changed.')">Reverse The Internet</button>
+    <button class="silly-btn btn-green"   onclick="sillBtn(this,'Contacting the moon... 📡 The moon says: &quot;please stop calling.&quot;')">Contact The Moon</button>
+    <button class="silly-btn btn-orange"  onclick="sillBtn(this,'Downloading more RAM... ███████████ 100%... just kidding, that\'s not a thing.')">Download More RAM</button>
+    <button class="silly-btn btn-purple"  onclick="sillBtn(this,'Turning it off and on again... everything is exactly the same.')">Fix Everything</button>
+    <button class="silly-btn btn-cyan"    onclick="sillBtn(this,'Boosting WiFi signal to LUDICROUS SPEED... 📶 You now have 0.0001Mbps more. Nice.')">Boost WiFi Signal</button>
+    <button class="silly-btn btn-yellow"  onclick="sillBtn(this,'Deleting all Mondays from the calendar... ERROR: Mondays are load-bearing. Aborted.')">Delete All Mondays</button>
+    <button class="silly-btn btn-pink"    onclick="makeItRain()">Make It Rain Emojis</button>
+    <div id="btn-output" style="margin-top:12px;padding:10px;background:#111;border-radius:8px;color:#0f0;font-size:0.9rem;min-height:40px;display:none;"></div>
+  </div>
+
+  <!-- COUNTDOWN CARD -->
+  <div class="card card-yellow">
+    <div class="card-title">&#9200; CRITICAL COUNTDOWN</div>
+    <p style="text-align:center;color:#ffff88;font-size:0.95rem;">Time remaining until the world's largest rubber duck museum opens in Scunthorpe:</p>
+    <div id="countdown-display">
+      <div class="cd-unit"><span class="cd-num" id="cd-d">00</span><span class="cd-label">Days</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-h">00</span><span class="cd-label">Hrs</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-m">00</span><span class="cd-label">Min</span></div>
+      <div class="cd-unit"><span class="cd-num" id="cd-s">00</span><span class="cd-label">Sec</span></div>
+    </div>
+    <p style="text-align:center;color:#aaa;font-size:0.8rem;margin-top:8px;">* Museum may or may not exist. Duck status: unconfirmed.</p>
+    <div style="text-align:center;font-size:3rem;animation:wobble 1s ease-in-out infinite alternate;">&#x1F986;</div>
+  </div>
+
+  <!-- MEMBERS ONLY CARD -->
+  <div class="card card-green">
+    <div class="card-title">&#x1F512; MEMBERS ONLY ZONE</div>
+    <div id="members-gate">
+      <div class="padlock">&#x1F512;</div>
+      <p style="text-align:center;margin:10px 0;">This area is exclusively for members of The Order of Absolutely Nothing Important.</p>
+      <div id="login-form">
+        <input type="text"     id="login-user" placeholder="Username (hint: it's 'president')" autocomplete="off">
+        <input type="password" id="login-pass" placeholder="Password (hint: it's 'banana')" autocomplete="off">
+        <button class="silly-btn btn-green" style="margin-top:10px" onclick="tryLogin()">GAIN ENTRY (if worthy)</button>
+        <div id="login-msg" style="color:#f88;font-size:0.9rem;margin-top:6px;text-align:center;"></div>
+      </div>
+    </div>
+    <div id="members-area">
+      <div style="text-align:center;font-size:3rem;">&#x1F451;</div>
+      <p style="color:var(--electric-lime);text-align:center;font-family:'Pacifico',cursive;font-size:1.2rem;">Welcome, Distinguished Member!</p>
+      <p>Congratulations. You now have exclusive access to absolutely nothing that non-members don't also have access to. The secret handshake is a firm nod. The secret password, which you just used, is now compromised. Please report to the Secret Room (there is no secret room).</p>
+      <div class="cert">
+        <h3>&#127881; Certificate of Membership &#127881;</h3>
+        <p>This certifies that <strong>YOU</strong> are officially a member of The Order of Absolutely Nothing Important and are entitled to all the rights and privileges therein, which are none.</p>
+        <p style="margin-top:8px;font-size:0.75rem;color:#888;">Not valid anywhere. Void where prohibited. Prohibited everywhere.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- USELESS FACTS CARD -->
+  <div class="card card-cyan">
+    <div class="card-title">&#x1F9E0; USELESS FACT GENERATOR</div>
+    <p>Expand your mind with knowledge you will never, ever need.</p>
+    <div id="fact-box">Click the button to receive a fact of dubious accuracy.</div>
+    <button class="silly-btn btn-cyan" style="margin-top:14px" onclick="newFact()">&#x1F4A1; Generate Useless Fact</button>
+  </div>
+
+  <!-- DEPARTMENT PROGRESS CARD -->
+  <div class="card card-orange">
+    <div class="card-title">&#x1F4CA; Department Status</div>
+    <p>Live progress metrics from our various departments:</p>
+
+    <div class="prog-wrap">
+      <div class="prog-label">Department of Procrastination</div>
+      <div class="prog-bar"><div class="prog-fill" style="width:97%;background:var(--hot-pink);"></div></div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-label">Bureau of Unnecessary Meetings</div>
+      <div class="prog-bar"><div class="prog-fill" style="width:110%;background:var(--nuclear-orange);"></div></div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-label">Office of Renaming Things</div>
+      <div class="prog-bar"><div class="prog-fill" style="width:63%;background:var(--electric-lime);"></div></div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-label">Committee for Deciding on Committees</div>
+      <div class="prog-bar"><div class="prog-fill" style="width:42%;background:var(--screaming-cyan);"></div></div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-label">Division of Doing Absolutely Nothing</div>
+      <div class="prog-bar"><div class="prog-fill" style="width:100%;background:var(--deep-purple);"></div></div>
+    </div>
+
+    <div class="prog-wrap">
+      <div class="prog-label">Snack Budget Utilisation</div>
+      <div class="prog-bar"><div class="prog-fill" style="width:100%;background:var(--blinding-yellow);"></div></div>
+    </div>
+  </div>
+
+  <!-- VISITOR COUNTER CARD -->
+  <div class="card card-purple">
+    <div class="card-title">&#x1F4BB; VISITOR COUNTER</div>
+    <p style="text-align:center;">You are visitor number:</p>
+    <div id="visitor-num">7</div>
+    <p style="text-align:center;color:#aaa;font-size:0.85rem;margin-top:4px;">(This number is fake. We have no idea how many people have visited. Could be seven. Could be seven billion.)</p>
+    <button class="silly-btn btn-purple" style="margin-top:12px" onclick="incrementVisitor()">I Am A New Visitor</button>
+    <button class="silly-btn btn-pink"   onclick="decrementVisitor()">Actually I'm Leaving</button>
+  </div>
+
+  <!-- OFFICIAL POLL CARD -->
+  <div class="card card-yellow" style="grid-column: span 1;">
+    <div class="card-title">&#x1F5F3;&#xFE0F; OFFICIAL POLL</div>
+    <p>This poll is legally binding in no jurisdictions.</p>
+    <p style="color:#ffff99;font-size:1.05rem;margin-bottom:10px;">If a wizard offered you infinite cheese, what would you do?</p>
+
+    <label class="poll-option"><input type="radio" name="poll" value="a"> Accept immediately, no questions asked</label>
+    <label class="poll-option"><input type="radio" name="poll" value="b"> Negotiate for slightly better cheese</label>
+    <label class="poll-option"><input type="radio" name="poll" value="c"> Ask the wizard for a receipt</label>
+    <label class="poll-option"><input type="radio" name="poll" value="d"> Report the wizard to the relevant authorities</label>
+
+    <button class="silly-btn btn-yellow" style="margin-top:12px" onclick="submitPoll()">Submit My Vital Opinion</button>
+    <div id="poll-result"></div>
+  </div>
+
+  <!-- SELF-DESTRUCT CARD -->
+  <div class="card card-pink" style="text-align:center;">
+    <div class="card-title">&#x26A0;&#xFE0F; EMERGENCY PROTOCOLS</div>
+    <p>For use only in the most dire of circumstances, which we define as any time.</p>
+    <div style="font-size:4rem;animation:spin 4s linear infinite;">&#x1F4A3;</div>
+    <button class="silly-btn btn-pink"   style="margin-top:10px" onclick="selfDestruct()">INITIATE SELF-DESTRUCT</button>
+    <button class="silly-btn btn-orange" onclick="callHelp()">&#x1F198; Call For Help</button>
+    <button class="silly-btn btn-cyan"   onclick="doNotPress()">DO NOT PRESS THIS BUTTON</button>
+    <div id="destruct-msg" style="margin-top:10px;color:#f88;font-size:0.9rem;"></div>
+  </div>
+
+</main>
+
+<!-- ===== RAINBOW STRIP ===== -->
+<div class="rainbow-strip">
+  &#10022; All content on this site is certified 100% Absolutely Nothing Important &#10022; No refunds &#10022; Not responsible for existential crises &#10022; Patent pending on the concept of "nothing" &#10022;
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  &copy; <span id="year"></span> The Official Headquarters of Absolutely Nothing Important &bull; All rights reserved, waived, and then reserved again just in case<br>
+  <span>Proudly hosted somewhere</span> &bull; Privacy Policy: <span>we don't know who you are and frankly we're fine with that</span><br>
+  <span>This website has won zero awards</span> &bull; Made with <span>&#10084;</span> and an alarming amount of free time
+</footer>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h2 id="modal-title"></h2>
+    <p id="modal-body"></p>
+    <button class="silly-btn btn-pink" onclick="closeModal()">OK Fine Whatever</button>
+  </div>
+</div>
+
+<script>
+  // ---- YEAR ----
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ---- COUNTDOWN (to a made-up date far in the future) ----
+  const target = new Date('2027-04-01T10:00:00');
+  function updateCountdown() {
+    const diff = target - Date.now();
+    if (diff <= 0) {
+      ['cd-d','cd-h','cd-m','cd-s'].forEach(id => document.getElementById(id).textContent = '00');
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ---- SILLY BUTTON OUTPUT ----
+  function sillBtn(btn, msg) {
+    const out = document.getElementById('btn-output');
+    out.style.display = 'block';
+    out.innerHTML = '> ' + msg;
+    out.style.animation = 'none';
+    out.offsetHeight; // reflow
+    out.style.animation = '';
+  }
+
+  // ---- EMOJI RAIN ----
+  const emojis = ['🦆','🍕','🦄','🌮','🎺','🐌','🧀','🦑','🪐','🎷','🐙','🍔','🦩','🎲','🧸','🌈','🦋','🍩','🎃','🚀'];
+  function makeItRain() {
+    for (let i = 0; i < 30; i++) {
+      setTimeout(() => {
+        const el = document.createElement('div');
+        el.className = 'floater';
+        el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        el.style.left = Math.random() * 100 + 'vw';
+        el.style.bottom = '-60px';
+        el.style.fontSize = (1.5 + Math.random() * 3) + 'rem';
+        const dur = 2 + Math.random() * 3;
+        el.style.animationDuration = dur + 's';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), dur * 1000 + 100);
+      }, i * 80);
+    }
+  }
+
+  // ---- LOGIN ----
+  function tryLogin() {
+    const u = document.getElementById('login-user').value.trim().toLowerCase();
+    const p = document.getElementById('login-pass').value.trim().toLowerCase();
+    const msg = document.getElementById('login-msg');
+    const attempts = ["Hmm... checking...", "Cross-referencing with the Sacred Registry of Members...", "Consulting the oracle..."];
+
+    if (u === 'president' && p === 'banana') {
+      msg.style.color = '#0f0';
+      msg.textContent = 'Identity confirmed. Welcome, President.';
+      setTimeout(() => {
+        document.getElementById('members-gate').style.display = 'none';
+        document.getElementById('members-area').style.display = 'block';
+      }, 900);
+    } else if (u === '' || p === '') {
+      msg.style.color = '#f88';
+      msg.textContent = 'You must enter SOMETHING. Anything. Please.';
+    } else {
+      msg.style.color = '#f88';
+      const wrongs = [
+        `"${u}" is not a member. They sound made up.`,
+        `Wrong password. The oracle is disappointed.`,
+        `Access denied. The padlock looked at your credentials and sighed.`,
+        `Incorrect. Have you tried turning your credentials off and on again?`,
+        `Security breach attempted. Just kidding. But no.`
+      ];
+      msg.textContent = wrongs[Math.floor(Math.random() * wrongs.length)];
+    }
+  }
+
+  // Allow Enter key in login
+  ['login-user','login-pass'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+  });
+
+  // ---- USELESS FACTS ----
+  const facts = [
+    "A group of flamingos is called a 'flamboyance'. They know it and they lean into it.",
+    "The average person walks past 36 murderers in their lifetime. However, statisticians confirm this figure is made up and also alarming.",
+    "Cleopatra lived closer in time to the Moon landing than to the construction of the Great Pyramid. This is real and it ruins everything.",
+    "A day on Venus is longer than a year on Venus. Venus is in its villain era.",
+    "Wombat poo is cube-shaped. Nobody asked for this. The wombat doesn't care.",
+    "The inventor of the Pringles can is buried in one. He requested this. It was honoured.",
+    "There are more possible iterations of a game of chess than atoms in the observable universe. This has been used to justify terrible chess decisions since 1950.",
+    "Crows can recognise human faces and hold grudges. They are watching. They remember.",
+    "Scotland's national animal is the unicorn. This was a very confident choice.",
+    "Bananas are technically berries. Strawberries are not berries. The law of berries is chaos.",
+    "A bolt of lightning is five times hotter than the surface of the sun. The sun is dealing with this news.",
+    "Humans share 60% of their DNA with bananas. The other 40% is also largely disappointing.",
+    "The word 'nerd' was first used in a Dr. Seuss book in 1950. Dr. Seuss invented the nerd. You're welcome.",
+    "Honey never spoils. Archaeologists found 3000-year-old honey in Egyptian tombs and it was reportedly still fine. They reportedly did not eat it. Reportedly.",
+    "Octopuses have three hearts, blue blood, and can open jars. They are simply better than us.",
+  ];
+
+  function newFact() {
+    const box = document.getElementById('fact-box');
+    box.style.opacity = 0;
+    setTimeout(() => {
+      box.textContent = facts[Math.floor(Math.random() * facts.length)];
+      box.style.opacity = 1;
+      box.style.transition = 'opacity 0.4s';
+    }, 250);
+  }
+
+  // ---- VISITOR COUNTER ----
+  let visitors = 7;
+  function updateVis() { document.getElementById('visitor-num').textContent = visitors.toLocaleString(); }
+  function incrementVisitor() {
+    visitors += Math.floor(Math.random() * 10000 + 1);
+    updateVis();
+  }
+  function decrementVisitor() {
+    visitors = Math.max(0, visitors - 1);
+    updateVis();
+  }
+
+  // ---- POLL ----
+  const pollResponses = {
+    a: "Excellent. A true cheese visionary. The wizard respects your decisiveness.",
+    b: "Bold. The wizard is mildly annoyed but admits it's a fair point.",
+    c: "Legendary. The wizard has never been asked for a receipt before. They are having feelings about this.",
+    d: "SHOCKING. There is no authority that handles this. You are on your own."
+  };
+
+  function submitPoll() {
+    const selected = document.querySelector('input[name="poll"]:checked');
+    const result = document.getElementById('poll-result');
+    if (!selected) {
+      result.style.display = 'block';
+      result.style.color = '#f88';
+      result.textContent = 'Please select an option. The cheese wizard is waiting.';
+      return;
+    }
+    result.style.display = 'block';
+    result.style.color = 'var(--electric-lime)';
+    result.textContent = pollResponses[selected.value];
+  }
+
+  // ---- SELF DESTRUCT / EMERGENCY ----
+  let destructArmed = false;
+  let destructSequence = 0;
+
+  function selfDestruct() {
+    const msg = document.getElementById('destruct-msg');
+    const sequences = [
+      'SELF-DESTRUCT INITIATED... just kidding. Nothing happened.',
+      'WARNING: Self-destruct re-initiated. Same result.',
+      'Self-destruct sequence cancelled by the Department of Nothing Important (they had concerns).',
+      'ERROR 404: Destruction not found. Have you tried asking nicely?',
+      'ALERT: Self-destruct button worn out from overuse. Please allow 5-7 business days for a new one.',
+    ];
+    msg.textContent = sequences[destructSequence % sequences.length];
+    destructSequence++;
+  }
+
+  function callHelp() {
+    showModal("Help Has Been Called",
+      "A very small, thoroughly confused rescue pigeon has been dispatched. Estimated arrival: 6 to 8 business pigeons. The pigeon does not know what it is helping with. Neither do we.");
+  }
+
+  function doNotPress() {
+    makeItRain();
+    showModal("YOU PRESSED IT",
+      "We said NOT to press this button. We said it RIGHT THERE on the button. In capital letters. And yet. HERE WE ARE. Enjoy the chaos you have created. The emojis are your fault.");
+  }
+
+  // ---- MODAL ----
+  function showModal(title, body) {
+    document.getElementById('modal-title').innerHTML = title;
+    document.getElementById('modal-body').innerHTML = body;
+    document.getElementById('modal').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('active');
+  }
+
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // ---- KONAMI CODE easter egg ----
+  const KONAMI = [38,38,40,40,37,39,37,39,66,65];
+  let konamiPos = 0;
+  document.addEventListener('keydown', e => {
+    if (e.keyCode === KONAMI[konamiPos]) {
+      konamiPos++;
+      if (konamiPos === KONAMI.length) {
+        konamiPos = 0;
+        makeItRain();
+        showModal("&#x1F3AE; KONAMI CODE ACTIVATED",
+          "Congratulations, you absolute legend. You now have 30 extra lives in this webpage, which has no lives system. You've earned it. Enjoy the emojis.");
+      }
+    } else {
+      konamiPos = 0;
+    }
+  });
+</script>
+</body>
+</html>
