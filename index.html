@@ -633,6 +633,7 @@
         <div>&#x1F4F1; Swipe or use D-pad</div>
         <div>&#x1F40D; You start HUGE (15 long)</div>
         <div>&#x1F48A; Eat tiny snakes to shrink</div>
+        <div>&#x1F42D; Eat mice to grow +3!</div>
         <div>&#x1F3AF; Reach length 1 to WIN</div>
         <div>&#x1F480; Don't hit walls or yourself</div>
         <div style="margin-top:14px;font-family:'Fredoka One',cursive;color:var(--hot-pink);">LEGEND</div>
@@ -640,7 +641,10 @@
           <div style="width:14px;height:14px;background:#ff007f;border-radius:3px;flex-shrink:0;"></div> You (the big one)
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin:4px 0;">
-          <div style="width:14px;height:14px;background:#00ffff;border-radius:3px;flex-shrink:0;"></div> Tiny snakes (eat these!)
+          <div style="width:14px;height:14px;background:#00ffff;border-radius:3px;flex-shrink:0;"></div> Tiny snakes (eat to shrink)
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin:4px 0;">
+          <div style="width:14px;height:14px;background:#888;border-radius:50%;flex-shrink:0;"></div> Mice (eat to grow +3!)
         </div>
       </div>
     </div>
@@ -887,10 +891,10 @@
 (function () {
   var CELL = 20, COLS = 20, ROWS = 20;
   var W = COLS * CELL, H = ROWS * CELL;
-  var INIT_LEN = 15, TINY_LEN = 3, NUM_TINY = 5;
+  var INIT_LEN = 15, TINY_LEN = 3, NUM_TINY = 5, NUM_MICE = 3;
   var TICK_MS = 130, TINY_EVERY = 3;
 
-  var snake, tinySnakes, dir, nextDir, tickCount, score, state, rafId, lastTick;
+  var snake, tinySnakes, mice, dir, nextDir, tickCount, score, miceEaten, state, rafId, lastTick;
 
   function v(x, y) { return { x: x, y: y }; }
   function eq(a, b) { return a.x === b.x && a.y === b.y; }
@@ -905,9 +909,11 @@
     var sx = Math.floor(COLS / 2), sy = Math.floor(ROWS / 2);
     for (var i = 0; i < INIT_LEN; i++) snake.push(v(sx - i, sy));
     dir = v(1, 0); nextDir = v(1, 0);
-    score = 0; tickCount = 0;
+    score = 0; miceEaten = 0; tickCount = 0;
     tinySnakes = [];
     for (var j = 0; j < NUM_TINY; j++) spawnTiny();
+    mice = [];
+    for (var k = 0; k < NUM_MICE; k++) spawnMouse();
     state = 'idle';
   }
 
@@ -916,7 +922,18 @@
     for (var t = 0; t < tinySnakes.length; t++)
       for (var s = 0; s < tinySnakes[t].body.length; s++)
         if (eq(tinySnakes[t].body[s], pos)) return true;
+    if (mice) for (var m = 0; m < mice.length; m++) if (eq(mice[m].pos, pos)) return true;
     return false;
+  }
+
+  function spawnMouse() {
+    var pos, tries = 0;
+    do {
+      pos = v(1 + Math.floor(Math.random() * (COLS - 2)),
+              1 + Math.floor(Math.random() * (ROWS - 2)));
+      tries++;
+    } while (occupied(pos) && tries < 200);
+    mice.push({ pos: pos });
   }
 
   function spawnTiny() {
@@ -971,8 +988,22 @@
       for (var s = 0; s < tinySnakes[t].body.length; s++)
         if (eq(tinySnakes[t].body[s], nh)) { hitIdx = t; break outer; }
 
+    // Check mice
+    var mouseHit = -1;
+    for (var m = 0; m < mice.length; m++) {
+      if (eq(mice[m].pos, nh)) { mouseHit = m; break; }
+    }
+
     snake.unshift(nh);
-    if (hitIdx !== -1) {
+    if (mouseHit !== -1) {
+      mice.splice(mouseHit, 1);
+      miceEaten++;
+      // Grow by 3: head was already added; keep tail + push 2 more tail copies
+      var tail = snake[snake.length - 1];
+      snake.push(v(tail.x, tail.y));
+      snake.push(v(tail.x, tail.y));
+      setTimeout(function() { if (state === 'playing') spawnMouse(); }, 2000);
+    } else if (hitIdx !== -1) {
       var eaten = tinySnakes.splice(hitIdx, 1)[0];
       score++;
       var shrink = Math.min(eaten.body.length, snake.length - 1);
@@ -987,6 +1018,35 @@
 
   var canvas = document.getElementById('snake-canvas');
   var ctx = canvas.getContext('2d');
+
+  function drawMouse(pos) {
+    var px = pos.x * CELL, py = pos.y * CELL;
+    var cx = px + CELL / 2, cy = py + CELL / 2 + 1;
+    var r = CELL / 2 - 3;
+    // Tail
+    ctx.strokeStyle = '#bbb';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(cx - r, cy + 1);
+    ctx.quadraticCurveTo(cx - r - 4, cy + 5, cx - r - 2, cy + 9);
+    ctx.stroke();
+    // Body
+    ctx.fillStyle = '#888';
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fill();
+    // Ears (pink inside gray)
+    ctx.fillStyle = '#aaa';
+    ctx.beginPath(); ctx.arc(cx - 3, cy - r, 3.5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx + 3, cy - r, 3.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#e88';
+    ctx.beginPath(); ctx.arc(cx - 3, cy - r, 2, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx + 3, cy - r, 2, 0, Math.PI * 2); ctx.fill();
+    // Eyes (red)
+    ctx.fillStyle = '#f55';
+    ctx.beginPath(); ctx.arc(cx - 2, cy - 1, 1.5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx + 2, cy - 1, 1.5, 0, Math.PI * 2); ctx.fill();
+  }
 
   function drawEyes(seg, d) {
     var cx = seg.x * CELL + CELL / 2, cy = seg.y * CELL + CELL / 2;
@@ -1012,7 +1072,7 @@
     ctx.fillStyle = '#eee';
     ctx.font = '15px "Comic Neue", cursive';
     ctx.fillText(sub, W/2, H/2 - 8);
-    ctx.fillText('Tiny snakes eaten: ' + score, W/2, H/2 + 18);
+    ctx.fillText('Tiny snakes eaten: ' + score + '  |  Mice eaten: ' + miceEaten, W/2, H/2 + 18);
     ctx.fillStyle = '#ffff00';
     ctx.font = '13px "Comic Neue", cursive';
     ctx.fillText('Press SPACE or click Play to restart', W/2, H/2 + 52);
@@ -1029,6 +1089,9 @@
     for (var y = 0; y <= ROWS; y++) {
       ctx.beginPath(); ctx.moveTo(0, y * CELL); ctx.lineTo(W, y * CELL); ctx.stroke();
     }
+
+    // Mice
+    for (var m = 0; m < mice.length; m++) drawMouse(mice[m].pos);
 
     // Tiny snakes
     for (var t = 0; t < tinySnakes.length; t++) {
@@ -1061,8 +1124,11 @@
     ctx.textAlign = 'left';
     ctx.fillText('Length: ' + snake.length, 8, 17);
     ctx.fillStyle = '#00ffff';
+    ctx.textAlign = 'center';
+    ctx.fillText('Snakes: ' + score, W / 2, 17);
+    ctx.fillStyle = '#ffaa00';
     ctx.textAlign = 'right';
-    ctx.fillText('Eaten: ' + score, W - 8, 17);
+    ctx.fillText('Mice: ' + miceEaten, W - 8, 17);
 
     if (state === 'idle') {
       ctx.fillStyle = 'rgba(0,0,0,0.65)';
